@@ -132,7 +132,7 @@ class _PostScreenState extends State<PostScreen> {
                                     '${post.user!.name}',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 17),
+                                        fontSize: 20),
                                   ),
                                 ],
                               ),
@@ -171,7 +171,12 @@ class _PostScreenState extends State<PostScreen> {
                         SizedBox(
                           height: 12,
                         ),
-                        Text('${post.body}'),
+                        Text(
+                            '${post.title}',
+                            style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 17),
+                                  ),
                         post.image != null
                             ? Container(
                                 width: MediaQuery.of(context).size.width,
@@ -185,6 +190,11 @@ class _PostScreenState extends State<PostScreen> {
                             : SizedBox(
                                 height: post.image != null ? 0 : 10,
                               ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text('${post.body}'),
+                        
                         Row(
                           children: [
                             fLikeAndComment(

@@ -21,6 +21,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Ingpo Game'),
+        backgroundColor: Colors.green,
         actions: [
           IconButton(
               icon: Icon(Icons.exit_to_app),
@@ -41,19 +42,23 @@ class _HomeState extends State<Home> {
                 head: 'Create Post',
               )));
         },
+        backgroundColor: Colors.green,
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
+        color: Colors.green,
         notchMargin: 5,
         elevation: 10,
         clipBehavior: Clip.antiAlias,
         shape: CircularNotchedRectangle(),
         child: BottomNavigationBar(
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: '')
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
           ],
+          backgroundColor: Colors.green,
+          fixedColor: Colors.white,
           currentIndex: currentIndex,
           onTap: (val) {
             setState(() {

@@ -54,6 +54,7 @@ class _RegisterState extends State<Register> {
       appBar: AppBar(
         title: Text('Register'),
         centerTitle: true,
+        backgroundColor: Colors.green,
       ),
       body: Form(
         key: formKey,

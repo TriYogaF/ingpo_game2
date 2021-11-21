@@ -32,7 +32,7 @@ TextButton fTextButton(String label, Function onPressed) {
     ),
     style: ButtonStyle(
         backgroundColor:
-            MaterialStateColor.resolveWith((states) => Colors.lightBlue),
+            MaterialStateColor.resolveWith((states) => Colors.green),
         padding: MaterialStateProperty.resolveWith(
             (states) => EdgeInsets.symmetric(vertical: 10))),
     onPressed: () => onPressed(),
@@ -46,7 +46,7 @@ Row fHint(String text, String label, Function onTap) {
     children: [
       Text(text),
       GestureDetector(
-        child: Text(label, style: TextStyle(color: Colors.blue)),
+        child: Text(label, style: TextStyle(color: Colors.green)),
         onTap: () => onTap(),
       )
     ],

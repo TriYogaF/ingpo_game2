@@ -23,7 +23,8 @@ class PostForm extends StatefulWidget {
 
 class _PostFormState extends State<PostForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _txtControllerBody = TextEditingController();
+  TextEditingController _txtControllerBody = TextEditingController();
+  TextEditingController _txtControllerTitle = TextEditingController();
   bool _loading = false;
   File? _imageFile;
   final _picker = ImagePicker();
@@ -39,7 +40,8 @@ class _PostFormState extends State<PostForm> {
 
   void _createPost() async {
     String? image = _imageFile == null ? null : getStringImage(_imageFile);
-    ApiResponse response = await createPost(_txtControllerBody.text, image);
+    ApiResponse response = await createPost(
+        _txtControllerTitle.text, _txtControllerBody.text, image);
 
     if (response.error == null) {
       Navigator.of(context).pop();
@@ -60,7 +62,8 @@ class _PostFormState extends State<PostForm> {
 
   //edit post
   void _editPost(int postId) async {
-    ApiResponse response = await editPost(postId, _txtControllerBody.text);
+    ApiResponse response = await editPost(
+        postId, _txtControllerTitle.text, _txtControllerBody.text);
     if (response.error == null) {
       Navigator.of(context).pop();
     } else if (response.error == unauthorized) {
@@ -82,6 +85,7 @@ class _PostFormState extends State<PostForm> {
   @override
   void initState() {
     if (widget.post != null) {
+      _txtControllerTitle.text = widget.post!.title ?? '';
       _txtControllerBody.text = widget.post!.body ?? '';
     }
     super.initState();
@@ -92,14 +96,18 @@ class _PostFormState extends State<PostForm> {
     return Scaffold(
       appBar: AppBar(
         title: Text('${widget.head}'),
+        backgroundColor: Colors.green,
       ),
       body: _loading
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : ListView(
-              children: [
-                widget.post != null
+          : Form(
+            key: _formKey,
+              child: ListView(
+                padding: EdgeInsets.all(15),
+                children: [
+                  widget.post != null
                     ? SizedBox()
                     : Container(
                         width: MediaQuery.of(context).size.width,
@@ -120,26 +128,40 @@ class _PostFormState extends State<PostForm> {
                           ),
                         ),
                       ),
-                Form(
-                  key: _formKey,
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: TextFormField(
+                SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
+                      controller: _txtControllerTitle,
+                      keyboardType: TextInputType.text,
+                      validator: (val) =>
+                          val!.isEmpty ? 'Post Title is required' : null,
+                      decoration: InputDecoration(
+                          hintText: "Post title..",
+                          border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 1, color: Colors.black38))),
+                    ),
+                SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
                       controller: _txtControllerBody,
                       keyboardType: TextInputType.multiline,
-                      maxLines: 10,
+                      maxLines: 7,
                       validator: (val) =>
-                          val!.isEmpty ? 'Post body is required' : null,
+                          val!.isEmpty ? 'Post Body is required' : null,
                       decoration: InputDecoration(
                           hintText: "Post body..",
                           border: OutlineInputBorder(
                               borderSide:
                                   BorderSide(width: 1, color: Colors.black38))),
                     ),
-                  ),
+                SizedBox(
+                  height: 15,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  padding: EdgeInsets.symmetric(horizontal: 1),
                   child: fTextButton('Post', () {
                     if (_formKey.currentState!.validate()) {
                       setState(() {
@@ -153,7 +175,8 @@ class _PostFormState extends State<PostForm> {
                     }
                   }),
                 ),
-              ],
+                ],
+              ),
             ),
     );
   }

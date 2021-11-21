@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:ingpo_game/constant.dart';
@@ -50,12 +51,22 @@ class _LoginState extends State<Login> {
       appBar: AppBar(
         title: Text('Login'),
         centerTitle: true,
+        backgroundColor: Colors.green,
       ),
-      body: Form(
+      body:Form(
         key: formkey,
         child: ListView(
           padding: EdgeInsets.all(32),
           children: [
+            Text('Ingpo Game',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 40),
+              ),
+            SizedBox(
+              height: 15,
+            ),
             TextFormField(
               keyboardType: TextInputType.emailAddress,
               controller: txtEmail,

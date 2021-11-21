@@ -38,7 +38,7 @@ Future<ApiResponse> getPosts() async {
 }
 
 // Create post
-Future<ApiResponse> createPost(String body, String? image) async {
+Future<ApiResponse> createPost(String title, String body, String? image) async {
   ApiResponse apiResponse = ApiResponse();
   try {
     String token = await getToken();
@@ -47,9 +47,7 @@ Future<ApiResponse> createPost(String body, String? image) async {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token'
         },
-        body: image != null ? {'body': body, 'image': image} : {'body': body});
-
-    // here if the image is null we just send the body, if not null we send the image too
+        body: {'title':title, 'body': body, 'image': image});
 
     switch (response.statusCode) {
       case 200:
@@ -74,7 +72,7 @@ Future<ApiResponse> createPost(String body, String? image) async {
 }
 
 // Edit post
-Future<ApiResponse> editPost(int postId, String body) async {
+Future<ApiResponse> editPost(int postId, String title, String body) async {
   ApiResponse apiResponse = ApiResponse();
   try {
     String token = await getToken();
@@ -82,7 +80,8 @@ Future<ApiResponse> editPost(int postId, String body) async {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token'
     }, body: {
-      'body': body
+      'body': body,
+      'title': title
     });
 
     switch (response.statusCode) {
